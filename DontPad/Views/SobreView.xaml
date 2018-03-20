@@ -1,0 +1,27 @@
+﻿<base:ViewMode
+    xmlns:base="using:DontPad.Base"
+    x:Class="DontPad.Views.SobreView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DontPad.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    DataContext="{Binding Source={StaticResource Locator}, Path=SobreViewModel}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Margin="10,10,0,0">
+            <StackPanel>
+                <TextBlock Text="About" Style="{StaticResource TitleTextBlockStyle}"/>
+                <TextBlock Text="Version: 1.5-Beta" Style="{StaticResource CaptionTextBlockStyle}"/>
+                <TextBlock Text="This app is client of the Dontpad.com" />
+                <TextBlock>
+                <Span xml:space="preserve"><Run>by</Run><Hyperlink NavigateUri="http://www.facebook.com/arthurbolsoni"> Arthur Bolsoni</Hyperlink></Span>
+                </TextBlock>
+                <TextBlock>
+                <Span xml:space="preserve"><Run>Icon Desing by</Run><Hyperlink NavigateUri="http://www.facebook.com/pedrohenrique.kunz"> Pedro Kunz</Hyperlink></Span>
+                </TextBlock>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</base:ViewMode>

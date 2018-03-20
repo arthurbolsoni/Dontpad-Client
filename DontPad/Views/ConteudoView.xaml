@@ -1,0 +1,168 @@
+﻿<base:ViewMode
+    x:Class="DontPad.Views.ConteudoView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DontPad.Views"
+    xmlns:controls="using:DontPad.Controls"
+    xmlns:helpers="using:DontPad.Helpers"
+    xmlns:base="using:DontPad.Base"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource Locator}, Path=ConteudoViewModel}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConv"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+
+                <!-- VisualState to be triggered when window width is >=1007 effective pixels -->
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1007" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NavigationPane.DisplayMode" Value="Inline" />
+                        <Setter Target="lvMenu.Width" Value="280" />
+                        <Setter Target="NavigationPane.OpenPaneLength" Value="280" />
+                        <Setter Target="NavigationPane.IsPaneOpen" Value="true"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!-- VisualState to be triggered when window width is >=0 and <641 effective pixels -->
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NavigationPane.DisplayMode" Value="Overlay" />
+                        <Setter Target="lvMenu.Width" Value="300" />
+                        <Setter Target="NavigationPane.OpenPaneLength" Value="300" />
+                        <Setter Target="NavigationPane.IsPaneOpen" Value="False" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="row1" Height="auto"/>
+            <RowDefinition x:Name="row2" Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--menu-->
+            <Button x:Name="PaneButton"
+					Style="{StaticResource ButtonStyleHamburguer}"
+					AutomationProperties.Name="Menu"
+					ToolTipService.ToolTip="Menu"
+                    Click="PaneButton_Click"/>
+
+            <Grid Grid.Column="1" Background="{ThemeResource SystemControlAltHighAcrylicElementBrush}">
+                <TextBlock FontSize="22"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Name="tbPanel"
+                           Text="{Binding cPesquisa}"/>
+            </Grid>
+            <StackPanel Grid.Column="2">
+                <AppBarButton Height="48" Command="{Binding GoBackCommand}" Style="{StaticResource AppBarButtonRevealStyle}">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE10F;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </StackPanel>
+        </Grid>
+
+        <ProgressBar VerticalAlignment="Top" Visibility="{Binding ProgressBar, Converter={StaticResource BooleanToVisibilityConv}}" IsIndeterminate="{Binding ProgressBar}" Foreground="{ThemeResource ProgressBarForegroundThemeBrush}"/>
+
+        <SplitView x:Name="NavigationPane"
+                   Grid.Row="1"
+                   Background="Transparent"
+                   PaneBackground="Transparent">
+            <SplitView.Pane>
+                <Grid Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Name="spMenu">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{Binding cPagina}" Name="tbTitulo" Style="{ThemeResource TitleTextBlockStyle}" Margin="24,8,8,8" />
+
+                        <StackPanel Grid.Column="1">
+                            <AppBarButton Height="48" Command="{Binding NewItemCommand}" Style="{StaticResource AppBarButtonRevealStyle}">
+                                <AppBarButton.Icon>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                        </StackPanel>
+                    </Grid>
+
+                    <ProgressRing Grid.Row="1" Visibility="Visible" IsActive="{Binding ProgressRing}" Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource ProgressBarForegroundThemeBrush}"/>
+
+                    <RelativePanel 
+                        Grid.Row="1"
+                        Name="rpMenu">
+                        <ListView Name="lvMenu"
+                                  ItemsSource="{Binding Items}"
+                                  IsItemClickEnabled="True"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                        </ListView>
+                    </RelativePanel>
+
+                </Grid>
+
+            </SplitView.Pane>
+            <SplitView.Content>
+                <controls:RichEditBoxExtended helpers:EnterKeyHelpers.EnterKeyCommand="{Binding KeyUpCommand}" RtfText="{Binding arquivo.body, Mode=TwoWay}"/>
+            </SplitView.Content>
+        </SplitView>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar VerticalAlignment="Bottom" Grid.Row="2">
+            <AppBarButton Label="Atualizar" Command="{Binding RefreshCommand}" Style="{StaticResource AppBarButtonRevealStyle}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72C;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Label="Compartilhar" Command="{Binding ShareCommand}" Style="{StaticResource AppBarButtonRevealStyle}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Label="Copiar" Command="{Binding CopyCommand}" Style="{StaticResource AppBarButtonRevealStyle}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8C8;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Label="Download" Command="{Binding DownloadCommand}" Style="{StaticResource AppBarButtonRevealStyle}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE896;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
+</base:ViewMode>

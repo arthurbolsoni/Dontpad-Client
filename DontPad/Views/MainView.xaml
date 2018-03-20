@@ -1,0 +1,98 @@
+﻿<base:ViewMode
+    xmlns:base="using:DontPad.Base"
+    x:Class="DontPad.Views.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DontPad.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+    <ResourceDictionary>
+        <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="../Themes/Generic.xaml"/>
+        </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <!--desktop-->
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <!-- VisualState to be triggered when the
+                             window width is >=720 effective pixels. -->
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="logo.FontSize" Value="78"/>
+                        <Setter Target="logo.FontWeight" Value="Bold"/>
+                        <Setter Target="tbUrl.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <AppBarButton Command="{Binding GoSobreView}" Height="48" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource AppBarButtonRevealStyle}">
+            <AppBarButton.Icon>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;"/>
+            </AppBarButton.Icon>
+        </AppBarButton>
+
+        <StackPanel HorizontalAlignment="Center">
+            <TextBlock Margin="0,60,0,40"
+                       Name="logo"
+                       FontFamily="Arial"
+                       FontSize="58"
+                       Text="DONTPAD"
+                       FontWeight="Bold"
+                       TextAlignment="Center"/>
+            <RelativePanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                <TextBlock x:Name="tbUrl"
+                           Text="www.dontpad.com/"
+                           FontSize="21"
+                           FontFamily="Arial"
+                           Margin="5,0,0,0"
+                           TextAlignment="Center"
+                           Visibility="Collapsed"/>
+
+                <TextBox RelativePanel.RightOf="tbUrl"
+                         Width="200"
+                         Name="tbPesquisa"
+                         Margin="5,0,5,0"
+                         InputScope="Search"
+                         FontFamily="Arial"
+                         TabIndex="1"/>
+
+                <Button RelativePanel.RightOf="tbPesquisa"
+                        Width="50"
+                        Height="30"
+                        Margin="5,0,5,0"
+                        Command="{Binding GoMainView}"
+                        CommandParameter="{Binding ElementName=tbPesquisa, Path=Text}"
+                        Name="btnPesquisar"
+                        FontFamily="Arial"
+                        Background="Transparent"
+                        TabIndex="1"
+                        Style="{StaticResource ButtonRevealStyle}">
+
+                    <Viewbox MaxHeight="40" MaxWidth="40">
+                        <SymbolIcon Symbol="Find"/>
+                    </Viewbox>
+                </Button>
+            </RelativePanel>
+            <TextBlock Text="{x:Bind intro}" 
+                       Name="tbIntro" 
+                       LineHeight="30" 
+                       Margin="0,40,0,0" 
+                       FontSize="18"
+                       FontFamily="Arial"
+                       TextWrapping="Wrap"/>
+        </StackPanel>
+    </Grid>
+</base:ViewMode>
