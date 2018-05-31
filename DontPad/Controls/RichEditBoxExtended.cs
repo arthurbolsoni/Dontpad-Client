@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace DontPad.Controls
 {
@@ -34,6 +38,7 @@ namespace DontPad.Controls
             if (!_lockChangeExecution)
             {
                 _lockChangeExecution = true;
+
                 string text;
                 Document.GetText(TextGetOptions.None, out text);
                 if (string.IsNullOrWhiteSpace(text))
@@ -49,19 +54,22 @@ namespace DontPad.Controls
             }
         }
 
-        private static void RtfTextPropertyChanged(DependencyObject dependencyObject,
-            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void RtfTextPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var rtb = dependencyObject as RichEditBoxExtended;
             if (rtb == null) return;
+
             if (!rtb._lockChangeExecution)
             {
                 if (string.IsNullOrWhiteSpace(rtb.RtfText))
                 {
                     rtb.RtfText = "";
                 }
+
                 rtb._lockChangeExecution = true;
                 rtb.Document.SetText(TextSetOptions.None, rtb.RtfText);
+                rtb.Document.Selection.SetRange(rtb.RtfText.Length - 1, rtb.RtfText.Length - 1);
+                rtb.Focus(FocusState.Keyboard);
                 rtb._lockChangeExecution = false;
             }
         }

@@ -25,6 +25,9 @@ namespace DontPad.ViewModels
 
         private List<String> pesquisa;
 
+        private bool _Modificar;
+        public bool Modificar { get => _Modificar; set { _Modificar = value; RaisePropertyChanged(); } }
+
         private String _cPesquisa;
         public String cPesquisa { get => _cPesquisa; set { _cPesquisa = value; RaisePropertyChanged(); } }
             
@@ -35,7 +38,7 @@ namespace DontPad.ViewModels
         public bool ProgressBar { get => _ProgressBar; set { _ProgressBar = value; RaisePropertyChanged(); } }
 
         private String _cPagina;
-        public String cPagina{ get => _cPagina; set { _cPagina = value; RaisePropertyChanged(); } }
+        public String cPagina { get => _cPagina; set { _cPagina = value; RaisePropertyChanged(); } }
 
         private Arquivo _arquivo;
         public Arquivo arquivo { get => _arquivo; set { _arquivo = value; RaisePropertyChanged(); } }
@@ -111,7 +114,7 @@ namespace DontPad.ViewModels
         {
             if (modificar)
             {
-                await DontPadService.Enviar(arquivo.body, pesquisa);
+                arquivo.lastUpdate = await DontPadService.Enviar(arquivo.body, pesquisa);
                 modificar = false;
             }
             else

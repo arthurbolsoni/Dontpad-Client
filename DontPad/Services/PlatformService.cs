@@ -14,8 +14,6 @@ namespace DontPad.Services
 {
     public sealed class PlatformService
     {
-        private readonly Dictionary<string, ElementTheme> _themes;
-
         public async Task LaunchUri(Uri uri) => await Launcher.LaunchUriAsync(uri);
 
         public static Task Share(string content)
@@ -46,10 +44,10 @@ namespace DontPad.Services
             Application.Current.Exit();
         }
 
-        public Task RegisterTheme(string theme)
+        public static Task RegisterTheme(ElementTheme elementTheme)
         {
             var contentElement = (Frame)Window.Current.Content;
-            contentElement.RequestedTheme = _themes[theme];
+            contentElement.RequestedTheme = elementTheme;
             return Task.CompletedTask;
         }
     }

@@ -1,4 +1,5 @@
 ﻿using DontPad.Base;
+using DontPad.Services;
 using DontPad.Views;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -28,6 +30,7 @@ namespace DontPad
     /// </summary>
     sealed partial class App : Application
     {
+        public static AppSettings appSettings;
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -47,6 +50,9 @@ namespace DontPad
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
+            
+            appSettings = new AppSettings();
+            
 
             //PC customization
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
@@ -100,6 +106,7 @@ namespace DontPad
                     // configuring the new page by passing required information as a navigation
                     // parameter
                     rootFrame.Navigate(typeof(MainView), e.Arguments);
+                    rootFrame.RequestedTheme = appSettings.Theme;
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();

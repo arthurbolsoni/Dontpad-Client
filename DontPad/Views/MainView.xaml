@@ -86,6 +86,7 @@
                     </Viewbox>
                 </Button>
             </RelativePanel>
+            
             <TextBlock Text="{x:Bind intro}" 
                        Name="tbIntro" 
                        LineHeight="30" 

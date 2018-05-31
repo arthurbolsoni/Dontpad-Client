@@ -13,7 +13,7 @@
         <StackPanel Margin="10,10,0,0">
             <StackPanel>
                 <TextBlock Text="About" Style="{StaticResource TitleTextBlockStyle}"/>
-                <TextBlock Text="Version: 1.5-Beta" Style="{StaticResource CaptionTextBlockStyle}"/>
+                <TextBlock Text="Version: 1.75-Beta" Style="{StaticResource CaptionTextBlockStyle}"/>
                 <TextBlock Text="This app is client of the Dontpad.com" />
                 <TextBlock>
                 <Span xml:space="preserve"><Run>by</Run><Hyperlink NavigateUri="http://www.facebook.com/arthurbolsoni"> Arthur Bolsoni</Hyperlink></Span>
@@ -21,6 +21,11 @@
                 <TextBlock>
                 <Span xml:space="preserve"><Run>Icon Desing by</Run><Hyperlink NavigateUri="http://www.facebook.com/pedrohenrique.kunz"> Pedro Kunz</Hyperlink></Span>
                 </TextBlock>
+            </StackPanel>
+
+            <StackPanel>
+                <TextBlock Text="Config" Style="{StaticResource TitleTextBlockStyle}"/>
+                <ToggleSwitch OnContent="While" OffContent="Dark" IsOn="{Binding ToggleSwitch, Mode=TwoWay}"/>
             </StackPanel>
         </StackPanel>
     </Grid>
