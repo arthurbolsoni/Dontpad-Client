@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:DontPad.Views"
     xmlns:controls="using:DontPad.Controls"
-    xmlns:helpers="using:DontPad.Helpers"
+    xmlns:converters="using:DontPad.Converters"
     xmlns:base="using:DontPad.Base"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,7 +15,7 @@
 
     <Page.Resources>
         <ResourceDictionary>
-            <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConv"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConv"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Themes/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
