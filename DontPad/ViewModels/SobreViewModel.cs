@@ -14,25 +14,18 @@ namespace DontPad.ViewModels
 {
     public class SobreViewModel : ViewModelBase
     {
-        public List<String> _ComboBox;
-        public List<String> ComboBox { get => _ComboBox; set { _ComboBox = value; RaisePropertyChanged(); } }
-
-        private String _SelectedTheme { get; set; }
-        public String SelectedTheme { get => _SelectedTheme; set { _SelectedTheme = value; PlatformUpdateTheme(); PlatformUpdateTheme(); } }
+        private bool _ToggleSwitch;
+        public bool ToggleSwitch { get => _ToggleSwitch; set { _ToggleSwitch = value; RaisePropertyChanged(); PlatformUpdateTheme(); } }
 
         private void PlatformUpdateTheme()
         {
-            ElementTheme elementTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), SelectedTheme);
+            ElementTheme elementTheme = _ToggleSwitch ? ElementTheme.Light : ElementTheme.Dark;
             App.appSettings.Theme = elementTheme;
             PlatformService.RegisterTheme(elementTheme);
-            App.appSettings.SaveSettings();
         }
         public SobreViewModel(INavigationService navigationService) : base(navigationService)
         {
-            _ComboBox = Enum.GetNames(typeof(ElementTheme)).ToList<String>();
-            SelectedTheme = App.appSettings.Theme.ToString();
-
-            //_ComboBox = (int) App.appSettings.Theme == 2 ? false : true;
+            ToggleSwitch = (int) App.appSettings.Theme == 2 ? false : true;
         }
 
         public override void OnNavigatedTo(NavigationEventArgs e)

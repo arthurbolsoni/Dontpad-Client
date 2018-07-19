@@ -13,7 +13,7 @@
         <StackPanel Margin="10,10,0,0">
             <StackPanel>
                 <TextBlock Text="About" Style="{StaticResource TitleTextBlockStyle}"/>
-                <TextBlock Text="Version: 1.7.3-Beta" Style="{StaticResource CaptionTextBlockStyle}"/>
+                <TextBlock Text="Version: 1.75-Beta" Style="{StaticResource CaptionTextBlockStyle}"/>
                 <TextBlock Text="This app is client of the Dontpad.com" />
                 <TextBlock>
                 <Span xml:space="preserve"><Run>by</Run><Hyperlink NavigateUri="http://www.facebook.com/arthurbolsoni"> Arthur Bolsoni</Hyperlink></Span>
@@ -24,8 +24,8 @@
             </StackPanel>
 
             <StackPanel>
-                <TextBlock Text="Settings" Style="{StaticResource TitleTextBlockStyle}"/>
-                <ComboBox ItemsSource="{Binding ComboBox}" SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"/>
+                <TextBlock Text="Config" Style="{StaticResource TitleTextBlockStyle}"/>
+                <ToggleSwitch OnContent="While" OffContent="Dark" IsOn="{Binding ToggleSwitch, Mode=TwoWay}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

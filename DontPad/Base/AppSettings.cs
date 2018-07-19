@@ -25,7 +25,7 @@ namespace DontPad.Base
             Theme = (ElementTheme)loadObject.theme;
         }
 
-        public dynamic SaveSettings()
+        public void SaveSettings()
         {
             // Save a composite setting that will be roamed between devices
             ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -35,7 +35,6 @@ namespace DontPad.Base
             composite["fontSize"] = FontSize;
 
             localSettings.Values["ThemeSetting"] = composite;
-            return composite;
         }
 
         public dynamic LoadSettings()
@@ -47,14 +46,12 @@ namespace DontPad.Base
             dynamic expando = new ExpandoObject();
             var loadObject = expando as IDictionary<String, object>;
 
-            composite = composite == null ? SaveSettings() : composite;
 
             if (composite != null)
             {
                 loadObject["theme"] = composite["theme"];
                 loadObject["fontsize"] = composite["fontSize"];
             }
-
             return loadObject;
         }
 
